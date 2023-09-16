@@ -1,1 +1,1 @@
-alx printf project of two(Eric and Faurouk)
+alx printf project of two (Eric and Farouq)
