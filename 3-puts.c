@@ -4,14 +4,15 @@
  * _puts - prints a string to stdout
  * @str: the string to be printed
  */
-void _puts(char *str)
+int our_puts(char *str)
 {
 	int i;
 
 	i = 0;
-	while (str[i])
+	while (str[i] != '\0')
 	{
-		_putchar(str[i]);
+		our_putchar(str[i]);
 		i++;
 	}
+	return (i);
 }

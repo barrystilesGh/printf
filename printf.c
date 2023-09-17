@@ -1,7 +1,5 @@
 #include "main.h"
 #include <stdarg.h>
-#include <stdarg.h>
-
 /**
  * _printf - produces output according to format
  * @format: character string format
@@ -9,51 +7,40 @@
 */
 int _printf(const char *format, ...)
 {
-	int i, acs = 0, cur;
-	char *str;
+	int i, cur, acs = 0;
 
 	va_list params;
-	va_start(params, format);
-	for (i = 0; format[i]; i++)
+
+	if (!format || (format[0] == '%' && format[1] == '\0'))
 	{
-		if (format[i] == '%' && format[i - 1] != '%')
-		{
-			acs = 1;
-			continue;
-		}
-
-		if (acs == 0)
-		{
-			_putchar(format[i]);
-		}
-		else
-		{
-			switch (format[i])
-			{
-			case 'c':
-				cur = va_arg(params, int);
-				_putchar(cur);
-				break;
-
-			case 's':
-				str = va_arg(params, char *);
-				_puts(str);
-				break;
-
-			case '%':
-				_putchar('%');
-				break;
-
-			default:
-				_putchar(format[i - 1]);
-				_putchar(format[i]);
-				break;
-			}
-			acs = 0;
-		}
+		return (-1);
 	}
 
+	va_start(params, format);
+
+	for (i = 0; format[i] != '\0'; i++)
+	{
+		if (format[i] != '%')
+		{
+			our_putchar(format[i]);
+		}
+		else if (format[i] == '%' && format[i + 1] == 'c')
+		{
+			our_putchar(va_arg(params, int));
+			i++;
+		}
+		else if (format[i] == '%' && format[i + 1] == 's')
+		{
+			cur = our_puts(va_arg(params, char*));
+			i++;
+			acs += (cur - 1);
+		}
+		else if (format[i + 1] == '%')
+		{
+			our_putchar('%');
+		}
+		acs++;
+	}
 	va_end(params);
-	
-	return (i);
+	return (acs);
 }
