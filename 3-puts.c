@@ -1,8 +1,8 @@
 #include "main.h"
-
 /**
- * _puts - prints a string to stdout
+ * our_puts - prints a string to stdout
  * @str: the string to be printed
+ * Return: number of byte
  */
 int our_puts(char *str)
 {
