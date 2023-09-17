@@ -1,46 +1,47 @@
 #include "main.h"
 #include <stdarg.h>
+#include <stdlib.h>
+
 /**
  * _printf - produces output according to format
  * @format: character string format
  * Return: the number of characters printed
-*/
+ */
 int _printf(const char *format, ...)
 {
-	int i, cur, acs = 0;
-
+	int i, acs = 0, count = 0, cur;
 	va_list params;
 
-	if (!format || (format[0] == '%' && format[1] == '\0'))
-	{
+	if (format == NULL)
 		return (-1);
-	}
 
 	va_start(params, format);
-
-	for (i = 0; format[i] != '\0'; i++)
+	for (i = 0; format[i]; i++)
 	{
-		if (format[i] != '%')
+		if (format[i] == '%' && acs != 1)
 		{
-			our_putchar(format[i]);
+			acs = 1;
+			continue;
 		}
-		else if (format[i] == '%' && format[i + 1] == 'c')
+		if (acs == 0)
 		{
-			our_putchar(va_arg(params, int));
-			i++;
+			_putchar(format[i]);
+			count++;
+			continue;
 		}
-		else if (format[i] == '%' && format[i + 1] == 's')
+		if (format[i] == 'i' || format[i] == 'd')
 		{
-			cur = our_puts(va_arg(params, char*));
-			i++;
-			acs += (cur - 1);
+			cur = va_arg(params, int);
+			count += print_number(cur);
 		}
-		else if (format[i + 1] == '%')
+		else
 		{
-			our_putchar('%');
+			count += print_acs(format[i], format[i - 1], params);
 		}
-		acs++;
+		acs = 0;
 	}
+
 	va_end(params);
-	return (acs);
+
+	return (count);
 }

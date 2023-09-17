@@ -2,11 +2,14 @@
 #define MAIN_H
 
 #include <stdarg.h>
-#include <unistd.h>
-#include <stdlib.h>
 
-int our_putchar(char c);
+int _putchar(char c);
 int _printf(const char *format, ...);
-int our_puts(char *str);
+int _puts(char *str);
+int print_number(int n);
+int print_acs(char format, char prev, va_list params);
+int print_null(void);
+
+typedef unsigned int usi;
 
 #endif
